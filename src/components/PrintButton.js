@@ -2,7 +2,7 @@ import { Button, Segment, Icon } from 'semantic-ui-react'
 
 function PrintButton() {
   return(
-  <Segment textAlign='center' style={{ marginTop: 40 }}>  
+  <Segment vertical textAlign='center' style={{ marginTop: 10 }}>  
     <Button
       basic color='red'
       onClick={() => window.print()}
