@@ -5,7 +5,7 @@ function CreateEntries( { entries, deleteEntry, editEntry } ) {
     entries.map(
       (entry) => (
         <NewEntry
-          id={entry.id}
+          key={entry.id}
           {...entry}
           deleteEntry={deleteEntry}
           editEntry={editEntry}

@@ -13,13 +13,13 @@ const initialEntries = [
   {
     id: 'ktan6rjn5af0eimzou',
     description: 'Salary',
-    income: true,
+    isIncome: true,
     value: 1500
   },
   {
     id: 'ktan80gf173h5lxizym',
     description: 'Rent',
-    income: false,
+    isIncome: false,
     value: 500
   }
 ] 
@@ -31,6 +31,9 @@ function App() {
   const [isIncome, setIsIncome] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [entryId, setEntryId] = useState();
+  const [incomeTotal, setIncomeTotal] = useState(0);
+  const [expenseTotal, setExpenseTotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() =>{
     if (!isOpen && entryId) {
@@ -39,15 +42,33 @@ function App() {
       newEntries[index].description = description;
       newEntries[index].value = value;
       newEntries[index].isIncome = isIncome;
+      setEntries(newEntries);
+      resetEntries();
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen])
+
+  useEffect(() => {
+    let incomeTotal = 0;
+    let expenseTotal = 0;
+    entries.map(entry => {
+      if (!entry.isIncome) {
+        return expenseTotal += Number(entry.value);
+      } else {
+        return incomeTotal += Number(entry.value);
+      }
+    });
+    setTotal(incomeTotal - expenseTotal);
+    setExpenseTotal(expenseTotal);
+    setIncomeTotal(incomeTotal);
+  }, [entries])
 
   function deleteEntry(id) {
     const filtered = entries.filter((entry) => entry.id !== id);
     setEntries(filtered);
   }
 
-  function addEntry(description, value, isIncome) {
+  function addEntry() {
     const id = Date.now().toString(36) + Math.random().toString(36).substr(2);  
     const newEntry = entries.concat({
       id: id,
@@ -56,10 +77,16 @@ function App() {
       isIncome
     });
     setEntries(newEntry);
+    resetEntries()
+  }
+
+  function resetEntries() {
+    setDescription('');
+    setValue('');
+    setIsIncome(true);
   }
   
   function editEntry(id) {
-    console.log(`Edit entry with id ${id}`)
     if (id) {
       const index = entries.findIndex(entry => entry.id === id);
       const entry = entries[index];
@@ -78,9 +105,9 @@ function App() {
         size='small'
         color='black'
         label='Your Balance'
-        value='6000'
+        value={total}
       />
-      <DisplayAllBalances />
+      <DisplayAllBalances incomeTotal={incomeTotal} expenseTotal={expenseTotal}  />
       <PrintButton />
 
       <MainHeader title={'Add new transaction'} type={'h3'} />

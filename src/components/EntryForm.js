@@ -1,4 +1,4 @@
-import { Form } from 'semantic-ui-react'
+import { Fragment } from 'react/cjs/react.production.min'
 import BasicForm from './BasicForm'
 import SaveOrCancel from './SaveOrCancel'
 
@@ -14,7 +14,7 @@ function EntryForm(
   }) {
   
   return(
-    <Form unstackable>
+    <Fragment>
       <BasicForm 
         description={description}
         value={value}
@@ -25,11 +25,8 @@ function EntryForm(
       />
       <SaveOrCancel
         addEntry={addEntry}
-        description={description}
-        value={value}
-        isIncome={isIncome}
       />
-    </Form>
+    </Fragment>
   )
 }
 

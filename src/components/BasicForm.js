@@ -1,7 +1,7 @@
 import { Form } from 'semantic-ui-react'
 
 
-function BasicForm( { description, value, setDescription, setValue, setIsIncome }){
+function BasicForm( { description, value, setDescription, setValue, setIsIncome, isIncome }){
 
   const options = [
     { key: 1, text: 'Income', value: true },
@@ -10,7 +10,7 @@ function BasicForm( { description, value, setDescription, setValue, setIsIncome 
 
   return(
     <Form unstackable>
-      <Form.Group>
+      <Form.Group unstackable>
         <Form.Input 
           placeholder='New thing'
           width={10}
@@ -18,7 +18,7 @@ function BasicForm( { description, value, setDescription, setValue, setIsIncome 
           icon='tags'
           onChange={(event) => setDescription(event.target.value)}
           value={description}
-        />
+          />
         <Form.Input
           label='Value'
           width={3}
@@ -28,7 +28,7 @@ function BasicForm( { description, value, setDescription, setValue, setIsIncome 
           iconPosition='left'
           onChange={(event) => setValue(event.target.value)}
           value={value}
-        />
+          />
         <Form.Dropdown
           selection
           placeholder='Income or expense'
@@ -36,7 +36,8 @@ function BasicForm( { description, value, setDescription, setValue, setIsIncome 
           direction='right'
           options={options}
           onChange={() => setIsIncome((oldValue) => !oldValue) }
-        />
+          value={isIncome}
+          />
       </Form.Group>
     </Form>
   )

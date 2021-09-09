@@ -5,7 +5,6 @@ function ModalEdit(
   {
     isOpen,
     setIsOpen,
-    addEntry,
     description,
     value,
     isIncome,
